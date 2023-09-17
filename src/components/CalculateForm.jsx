@@ -2,7 +2,6 @@ import { useReducer, useEffect } from "react"
 
 const initalState = {
   billAmount: 0,
-  builtInTipAmount: 0,
   customAmount: 0,
   numberOfPeople: 0,
   tipAmount: 0,
@@ -37,16 +36,9 @@ const calculateTotalReducer = (state, action) => {
         total: action.payload.totalPerson
       }
 
-    case "FIVE_PERCENTAGE":
-      return {
-        ...state,
-        builtInTipAmount: action.payload.amount
-      }
-
     case "RESET":
       return {
         billAmount: 0,
-        builtInTipAmount: 0,
         customAmount: 0,
         numberOfPeople: 0,
         tipAmount: action.payload.tipAmount,
@@ -61,10 +53,7 @@ const calculateTotalReducer = (state, action) => {
 export const CalculateForm = () => {
 
   const [calculatedState, dispatch] = useReducer(calculateTotalReducer, initalState)
-  const { billAmount, builtInTipAmount, customAmount, numberOfPeople, tipAmount, total } = calculatedState
-
-  // console.log("Tip per person", tipAmount)
-  // console.log("Total per person", total)
+  const { billAmount, customAmount, numberOfPeople, tipAmount, total } = calculatedState
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -90,8 +79,7 @@ export const CalculateForm = () => {
   useEffect(() => {
     if(calculateableHandler()) {
       const calculateTotal = () => {
-        const totalTipAmount = (parseInt(customAmount) / parseInt(billAmount))
-        console.log("totalTipAmount", totalTipAmount)
+        const totalTipAmount = (parseInt(customAmount) / 100) * parseInt(billAmount)
         const tipPerperson = totalTipAmount / numberOfPeople
         const totalPerson = (Number(billAmount) + totalTipAmount) / numberOfPeople
         dispatch({ type: "CALCULATE_TOTAL", payload: { tipPerperson, totalPerson }})
@@ -107,12 +95,6 @@ export const CalculateForm = () => {
     }
     return false
   }
-
-  const fivePercentTipHandler = () => {
-    dispatch({ type: "FIVE_PERCENTAGE", payload: { amount: 5 }})
-  }
-
-  // console.log("builtInTipAmount", builtInTipAmount)
 
   return (
     <form
@@ -132,12 +114,7 @@ export const CalculateForm = () => {
         <div className="mb-2 md:mb-4">
           <label htmlFor="select" className="text-lg md:text-xl">Select Tip %</label>
           <div className="grid grid-cols-3 gap-2 mt-2">
-            <button
-              className="py-[0.40rem] px-[0.90rem] md:py-[0.55rem] md:px-[1.15rem]"
-              onClick={fivePercentTipHandler}
-            >
-              5%
-            </button>
+            <button className="py-[0.40rem] px-[0.90rem] md:py-[0.55rem] md:px-[1.15rem]">5%</button>
             <button className="py-[0.40rem] px-[0.90rem] md:py-[0.55rem] md:px-[1.15rem]">10%</button>
             <button className="py-[0.40rem] px-[0.90rem] md:py-[0.55rem] md:px-[1.15rem]">15%</button>
             <button className="py-[0.40rem] px-[0.90rem] md:py-[0.55rem] md:px-[1.15rem]">25%</button>
@@ -168,14 +145,14 @@ export const CalculateForm = () => {
               <h5 className="mb-1 font-extrabold text-base md:text-lg">Tip Amount</h5>
               <p className="opacity-50">/ person</p>
             </div>
-            <p className="font-extrabold text-xl md:text-3xl">${tipAmount}</p>
+            <p className="font-extrabold text-xl md:text-3xl">${tipAmount?.toFixed(2)}</p>
           </div>
           <div className="flex justify-between items-center mb-4">
             <div>
               <h5 className="mb-1 font-extrabold text-lg">Total</h5>
               <p className="opacity-50">/ person</p>
             </div>
-            <p className="font-extrabold text-xl md:text-3xl">${total}</p>
+            <p className="font-extrabold text-xl md:text-3xl">${total?.toFixed(2)}</p>
           </div>
         </div>
         <button 
