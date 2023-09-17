@@ -1,7 +1,7 @@
 export const CalculateForm = () => {
 
   return (
-    <form className="bg-white p-6 flex flex-col gap-4 justify-center rounded-2xl w-3/4 md:w-2/4 md:p-12 md:flex-row md:gap-8">
+    <form className="bg-white p-6 flex flex-col gap-4 justify-center rounded-2xl w-3/4 lg:w-2/4 md:p-12 md:flex-row md:gap-8">
       <div className="flex-1">
         <div className="flex flex-col mb-2 md:mb-4">
           <label htmlFor="bill" className="mb-1 text-lg md:text-xl md:mb-2">Bill</label>
