@@ -35,6 +35,12 @@ const calculateTotalReducer = (state, action) => {
         tipAmount: action.payload.tipPerperson,
         total: action.payload.totalPerson
       }
+    
+    case "BUILD_IN_AMOUNT":
+      return {
+        ...state,
+        customAmount: action.payload.amount
+      }
 
     case "RESET":
       return {
@@ -96,6 +102,26 @@ export const CalculateForm = () => {
     return false
   }
 
+  const calculateFivePercentage = () => {
+    dispatch({ type: "BUILD_IN_AMOUNT", payload: { amount: 5 }})
+  }
+
+  const calculateTenPercentage = () => {
+    dispatch({ type: "BUILD_IN_AMOUNT", payload: { amount: 10 }})
+  }
+
+  const calculateFifteenPercentage = () => {
+    dispatch({ type: "BUILD_IN_AMOUNT", payload: { amount: 15 }})
+  }
+
+  const calculateTwentyFivePercentage = () => {
+    dispatch({ type: "BUILD_IN_AMOUNT", payload: { amount: 25 }})
+  }
+
+  const calculateFiftyPercentage = () => {
+    dispatch({ type: "BUILD_IN_AMOUNT", payload: { amount: 50 }})
+  }
+
   return (
     <form
       className="bg-white p-6 flex flex-col gap-4 justify-center rounded-2xl w-3/4 lg:w-2/4 md:p-12 md:flex-row md:gap-8"
@@ -114,11 +140,36 @@ export const CalculateForm = () => {
         <div className="mb-2 md:mb-4">
           <label htmlFor="select" className="text-lg md:text-xl">Select Tip %</label>
           <div className="grid grid-cols-3 gap-2 mt-2">
-            <button className="py-[0.40rem] px-[0.90rem] md:py-[0.55rem] md:px-[1.15rem]">5%</button>
-            <button className="py-[0.40rem] px-[0.90rem] md:py-[0.55rem] md:px-[1.15rem]">10%</button>
-            <button className="py-[0.40rem] px-[0.90rem] md:py-[0.55rem] md:px-[1.15rem]">15%</button>
-            <button className="py-[0.40rem] px-[0.90rem] md:py-[0.55rem] md:px-[1.15rem]">25%</button>
-            <button className="py-[0.40rem] px-[0.90rem] md:py-[0.55rem] md:px-[1.15rem]">50%</button>
+            <button 
+              className="py-[0.40rem] px-[0.90rem] md:py-[0.55rem] md:px-[1.15rem]"
+              onClick={calculateFivePercentage}
+            >
+              5%
+            </button>
+            <button
+              className="py-[0.40rem] px-[0.90rem] md:py-[0.55rem] md:px-[1.15rem]"
+              onClick={calculateTenPercentage}
+            >
+              10%
+            </button>
+            <button
+              className="py-[0.40rem] px-[0.90rem] md:py-[0.55rem] md:px-[1.15rem]"
+              onClick={calculateFifteenPercentage}
+            >
+              15%
+            </button>
+            <button
+              className="py-[0.40rem] px-[0.90rem] md:py-[0.55rem] md:px-[1.15rem]"
+              onClick={calculateTwentyFivePercentage}
+            >
+              25%
+            </button>
+            <button
+              className="py-[0.40rem] px-[0.90rem] md:py-[0.55rem] md:px-[1.15rem]"
+              onClick={calculateFiftyPercentage}
+            >
+              50%
+            </button>
             <input
               type="number"
               placeholder="Custom"
